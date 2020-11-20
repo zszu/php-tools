@@ -468,4 +468,5 @@ if (!function_exists('curl')) {
     }
 }
 
-echo curl()->get("http://www.baidu.com")->body();
+echo curl()->get("https://b.faloo.com/p/841409/1.html")->body();
+
