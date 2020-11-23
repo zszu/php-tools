@@ -4,6 +4,7 @@
  */
 class Db
 {
+    private static $error;
 
     private static $link = null;//数据库连接
     /**
@@ -15,32 +16,43 @@ class Db
 
     /**
      * 连接数据库
-     * @return obj 资源对象
+     * @return object 资源对象
      */
     private static function conn()
     {
         if (self::$link === null) {
-            $cfg = require './config.php';
-            self::$link = new Mysqli($cfg['host'], $cfg['user'], $cfg['pwd'], $cfg['db']);
+
+            $cfg = require '../config/db.php';
+            try {
+                self::$link = new PDO("{$cfg['dsn']}", $cfg['username'], $cfg['password']);
+            }catch (PDOException $e){
+                self::$error = $e->getMessage();
+                return false;
+            }catch (Exception $e){
+                self::$error = $e->getMessage();
+                return false;
+            }
             self::query("set names " . $cfg['charset']);//设置字符集
         }
+
         return self::$link;
     }
 
     /**
      * 执行一条sql语句
-     * @param str $sql 查询语句
-     * @return obj      结果集对象
+     * @param string $sql 查询语句
+     * @return object      结果集对象
      */
     public static function query($sql)
     {
+
         return self::conn()->query($sql);
     }
 
     /**
      * 获取多行数据
-     * @param str $sql 查询语句
-     * @return arr      多行数据
+     * @param string $sql 查询语句
+     * @return array      多行数据
      */
     public static function getAll($sql)
     {
@@ -54,10 +66,10 @@ class Db
 
     /**
      * 获取一行数据
-     * @param str $row 查询语句
-     * @return arr      单行数据
+     * @param string $sql 查询语句
+     * @return array      单行数据
      */
-    public static function getRow($row)
+    public static function getRow($sql)
     {
         $res = self::query($sql);
         return $res->fetch_assoc();
@@ -65,8 +77,8 @@ class Db
 
     /**
      * 获取单个结果
-     * @param str $sql 查询语句
-     * @return str      单个结果
+     * @param string $sql 查询语句
+     * @return string      单个结果
      */
     public static function getOne($sql)
     {
@@ -77,10 +89,10 @@ class Db
 
     /**
      * 插入/更新数据
-     * @param str $table 表名
-     * @param arr $data 插入/更新的数据
-     * @param str $act insert/update
-     * @param str $where 更新条件
+     * @param string $table 表名
+     * @param array $data 插入/更新的数据
+     * @param string $act insert/update
+     * @param string $where 更新条件
      * @return bool 插入/更新是否成功
      */
     public static function exec($table, $data, $act = 'insert', $where = '0')

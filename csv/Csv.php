@@ -7,7 +7,7 @@ class Csv{
     public $csv_str;  //csv文件数据
     private $inEncode;
     private $outEncode;
-    public function __construct($param_arr,$path,$column){
+    public function __construct($param_arr,$path,$column ){
         $this->csv_array = $param_arr;
         $this->path = $path;
         $this->column = $column;
@@ -126,6 +126,7 @@ class Csv{
 
         return [$title => $titleArr, $res => $dataArray];
     }
+    //设置 每行数据
     private function setRow($arr){
 
         $rowContent="";
@@ -150,6 +151,7 @@ $param_arr = [
 
 $column = 3;
 $csv = new Csv($param_arr,'./', $column);
+
 $csv->export();
 $path = './test.csv';
 //$import_arr = $csv->import($path);
