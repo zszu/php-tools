@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js中模块</title>
+    <script type="module">
+        import {title , url , show} from './js/test.js';
+        console.log(show);
+        show();
+    </script>
+</head>
+<body>
+<script>
+    let module = (function () {
+        const moduleList = {};
+        function define(name , modules , action) {
+            modules.map((m , i)=>{
+                modules[i] = moduleList[m];
+            });
+            moduleList[name] = action.apply(null , modules);
+        }
+        return {define};
+    })();
+    module.define('test' , [],function () {
+        return {
+            first(arr){
+                return arr[0];
+            },
+            max(arr , key){
+                return arr.sort((a , b)=>b[key]-a[key])[0];
+            }
+        }
+    });
+    module.define('test2' , ['test'],function (test) {
+        let data = [
+            {name:'js',price:199},
+            {name:'mysql',price:299},
+        ];
+        console.log(test);
+        console.log(test.max(data , 'price'));
+    });
+
+
+    module.define('data' , [],function (test) {
+        return {
+            name:'js',price:199
+        };
+    });
+    module.define('data2' , ['data'],function (data) {
+        data.price = 200;
+    });
+    module.define('data3' , ['data'],function (data) {
+        console.log(data);
+    });
+</script>
+</body>
+</html>

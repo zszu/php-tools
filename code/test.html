@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>验证码</title>
+</head>
+<body>
+    <img src="http://127.0.0.1:88/code/Code.php" alt="点击刷新" class="img" onclick="test()">
+    <button type="button" id="btn">刷新</button>
+</body>
+<script>
+    var btn = document.getElementById('btn');
+    var img = document.getElementsByClassName('img');
+    test = function(){
+        img[0].src = './Code.php?t='+(new Date).valueOf();
+    }
+    btn.onclick = test;
+</script>
+</html>

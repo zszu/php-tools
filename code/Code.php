@@ -9,6 +9,7 @@ class Code {
     private $image; //图像资源
     private $disturbColorNum;
     private $checkCode;
+
     function __construct($width=80, $height=20, $codeNum=4){
         $this->width=$width;
         $this->height=$height;
@@ -21,6 +22,8 @@ class Code {
             $this->disturbColorNum=$number;
         }
     }
+
+
     //通过访问该方法向浏览器中输出图像
     function showImage($fontFace=""){
         //第一步：创建图像背景
@@ -81,7 +84,7 @@ class Code {
             }else{
                 $fontsize=rand(212, 216);
                 $x=floor(($this->width-8)/$this->codeNum)*$i+8;
-                $y=rand($fontSize+5, $this->height);
+                $y=rand($fontsize+5, $this->height);
                 imagettftext($this->image,$fontsize,rand(-30, 30),$x,$y ,$fontcolor, $fontFace, $this->checkCode{$i});
             }
         }

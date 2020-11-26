@@ -170,6 +170,7 @@ $config = array(
             'fontColor'=>'255,0,0',       //字体颜色
             'angle'=>0,//字体倾斜度
             'fontPath' => 'C:\Windows\Fonts\msyh.ttc',
+
         ],
         [
             'text' => '特效它',

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<?php
+    $users = [
+        ['name'=>'test1','age'=>16],
+        ['name'=>'test2','age'=>18],
+        ['name'=>'test3','age'=>19],
+];
+?>
+
+<table>
+    <tr><th>编号</th><th>姓名</th><th>年龄</th></tr>
+    <?php while ($user = current($users)):?>
+    <tr>
+        <td><?php echo key($users)+1;?></td>
+        <td><?php echo $users['name'];?></td>
+        <td><?php echo $users['age'];?></td>
+    </tr>
+    <?php  next($users); endwhile;?>
+</table>
+
+</body>
+</html>
